@@ -1,4 +1,4 @@
-import { getInput } from "@actions/core";
+import { getInput, setFailed, setOutput } from "@actions/core";
 import { context } from "@actions/github";
 
 async function run() {
@@ -6,9 +6,14 @@ async function run() {
     const token = getInput("GITHUB_TOKEN", { required: true });
     console.log("token", token);
 
-    const repository = context.payload.repository;
-    console.log("repo", repository);
-  } catch (error) {
+    const PR = getInput("pr_number", { required: true });
+    console.log("PR", PR);
+
+    setOutput("pr_updated", "blablabla");
+  } catch (error: unknown) {
     console.error(error);
+    if (error instanceof Error) {
+      setFailed(error.message);
+    }
   }
 }

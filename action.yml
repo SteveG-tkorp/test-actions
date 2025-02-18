@@ -4,8 +4,12 @@ author: 'SteveG-tkorp'
 inputs: 
   GITHUB_TOKEN:
     description: 'The GITHUB_TOKEN secret'
-  CONFIG_PATH:
-    description: 'The path for the config file (root)'
+  pr_number:
+    description: "The PR to update"
+    required: true
+outputs:
+  pr_updated:
+    description: "The PR slightly updated to test this action"
 runs:
   using: 'node12'
   main: 'lib/main.js'
