@@ -6,7 +6,7 @@ export async function getIssueClosingPR(
   octokit: Octokit
 ) {
   try {
-    const query = `query Repository {
+    const query = `query Repository($owner: String!, $repo: String!) {
     repository(owner: $owner, name: $repo) {
         pullRequest(number: 1248) {
             closingIssuesReferences(first: 1) {
@@ -14,11 +14,9 @@ export async function getIssueClosingPR(
                     id    
                 }
             }
-
         }
     }
 }
-
 `;
 
     const result = await octokit.graphql<any>(query, {
