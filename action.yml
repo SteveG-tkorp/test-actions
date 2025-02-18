@@ -4,8 +4,11 @@ author: 'SteveG-tkorp'
 inputs: 
   GITHUB_TOKEN:
     description: 'The GITHUB_TOKEN secret'
-  pr_number:
+  pr:
     description: "The PR to update"
+    required: true
+  pr_number:
+    description: "The PR number"
     required: true
 outputs:
   pr_updated:

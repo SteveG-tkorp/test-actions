@@ -4,11 +4,15 @@ import { context } from "@actions/github";
 async function run() {
   try {
     const token = getInput("GITHUB_TOKEN", { required: true });
-    info(`token: ${token}`);
-    console.log("info");
+    const repository = getInput("GITHUB_REPOSITORY", { required: true });
 
-    const PR = getInput("pr_number", { required: true });
+    console.log("token", token);
+    console.log("repository", repository);
+
+    const PR = getInput("pr", { required: true });
+    const PRNumber = getInput("pr_number", { required: true });
     info(`PR: ${PR}`);
+    console.log("PRNumber", PRNumber);
 
     setOutput("pr_updated", "blablabla");
   } catch (error: unknown) {
