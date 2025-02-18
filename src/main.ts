@@ -10,8 +10,8 @@ async function run() {
     const PRNumber = getInput("pr_number", { required: false });
     console.log("PRNumber", PRNumber);
 
-    const issueType = getInput("issue_type", { required: false });
-    console.log("issueType", issueType);
+    const issueNumber = getInput("issue_number", { required: false });
+    console.log("issueNumber", issueNumber);
 
     setOutput("pr_updated", "blablabla");
   } catch (error: unknown) {

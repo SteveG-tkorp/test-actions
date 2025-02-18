@@ -7,8 +7,8 @@ inputs:
   pr_number:
     description: "The PR number"
     # required: true
-  issue_type:
-    description: "The issue type"
+  issue_number:
+    description: "The issue number"
     # required: true
 outputs:
   pr_updated:
