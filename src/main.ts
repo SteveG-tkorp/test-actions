@@ -5,6 +5,7 @@ async function run() {
   try {
     const token = getInput("GITHUB_TOKEN", { required: true });
     info(`token: ${token}`);
+    console.log("info");
 
     const PR = getInput("pr_number", { required: true });
     info(`PR: ${PR}`);
