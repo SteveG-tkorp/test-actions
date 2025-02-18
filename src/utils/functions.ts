@@ -3,12 +3,13 @@ import { Octokit } from "@octokit/core";
 export async function getIssueClosingPR(
   owner: string,
   repo: string,
-  octokit: Octokit
+  octokit: Octokit,
+  prNumber: number
 ) {
   try {
     const query = `query Repository($owner: String!, $repo: String!) {
     repository(owner: $owner, name: $repo) {
-        pullRequest(number: 1248) {
+        pullRequest(number: $prNumber) {
             closingIssuesReferences(first: 1) {
                 nodes {
                     id    
@@ -22,6 +23,7 @@ export async function getIssueClosingPR(
     const result = await octokit.graphql<any>(query, {
       owner,
       repo,
+      prNumber,
     });
     console.log("result", result);
 

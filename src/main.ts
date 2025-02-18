@@ -30,7 +30,7 @@ async function run() {
 
     if (PRNumber) {
       console.log("🚀 Déclenché par PR");
-      getIssueClosingPR(owner, repo, octokit);
+      getIssueClosingPR(owner, repo, octokit, Number(PRNumber));
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {
