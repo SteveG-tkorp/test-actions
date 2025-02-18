@@ -9,9 +9,7 @@ async function run() {
     console.log("token", token);
     console.log("repository", repository);
 
-    const PR = getInput("pr", { required: true });
     const PRNumber = getInput("pr_number", { required: true });
-    info(`PR: ${PR}`);
     console.log("PRNumber", PRNumber);
 
     setOutput("pr_updated", "blablabla");
