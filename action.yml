@@ -11,5 +11,5 @@ outputs:
   pr_updated:
     description: "The PR slightly updated to test this action"
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'lib/main.js'
