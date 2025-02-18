@@ -6,16 +6,20 @@ async function run() {
   try {
     const token = getInput("GITHUB_TOKEN", { required: true });
 
-    console.log("token", token);
-
     const PRNumber = getInput("pr_number", { required: false });
-    console.log("PRNumber", PRNumber);
 
     const issueNumber = getInput("issue_number", { required: false });
-    console.log("issueNumber", issueNumber);
 
     console.log("context", context);
-    console.log("context.eventName", context.eventName);
+    console.log("context.payload.pull_request", context.payload.pull_request);
+    console.log(
+      "context.payload.pull_request.head",
+      context.payload.pull_request?.head
+    );
+    console.log(
+      "context.payload.pull_request._links",
+      context.payload.pull_request?._links
+    );
 
     const owner = context.repo.owner;
     console.log("🧑‍💻 owner", owner);
@@ -27,7 +31,7 @@ async function run() {
 
     if (PRNumber) {
       console.log("🚀 Déclenché par PR");
-      getPRInfos(owner, repo, octokit);
+      // getPRInfos(owner, repo, octokit);
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {
