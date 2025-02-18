@@ -1,5 +1,6 @@
 import { getInput, info, setFailed, setOutput } from "@actions/core";
-import { context } from "@actions/github";
+import { context, getOctokit } from "@actions/github";
+import { getPRInfos } from "./utils/functions";
 
 async function run() {
   try {
@@ -13,8 +14,27 @@ async function run() {
     const issueNumber = getInput("issue_number", { required: false });
     console.log("issueNumber", issueNumber);
 
-    setOutput("pr_updated", "blablabla");
+    console.log("context", context);
+    console.log("context.eventName", context.eventName);
+
+    const owner = context.repo.owner;
+    console.log("🧑‍💻 owner", owner);
+
+    const repo = context.repo.repo;
+    console.log("🎯 repo", repo);
+
+    const octokit = getOctokit(token);
+
+    if (PRNumber) {
+      console.log("🚀 Déclenché par PR");
+      getPRInfos(owner, repo, octokit);
+    } else if (issueNumber) {
+      console.log("🛠️ Déclenché par changement de label sur issue");
+    } else {
+      console.error("❔ Autre déclenchement");
+    }
   } catch (error: unknown) {
+    console.error(error);
     if (error instanceof Error) {
       setFailed(error.message);
     }
