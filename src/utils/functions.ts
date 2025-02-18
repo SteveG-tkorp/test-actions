@@ -6,9 +6,20 @@ export async function getPRInfos(
   octokit: Octokit
 ) {
   try {
-    const query = ``;
+    const query = `query Repository {
+    repository(owner: $owner, name: $repo) {
+        pullRequests {
+            totalCount
+            nodes {
+                title
+                number
+            }
+        }
+    }
+}
+`;
 
-    const result = await octokit.graphql(query);
+    const result = await octokit.graphql(query, { variables: { owner, repo } });
     console.log("result", result);
   } catch (error) {
     throw error;
