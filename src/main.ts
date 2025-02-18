@@ -1,6 +1,6 @@
-import { getInput, info, setFailed, setOutput } from "@actions/core";
+import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { getPRInfos } from "./utils/functions";
+import { getIssueClosingPR } from "./utils/functions";
 
 async function run() {
   try {
@@ -10,7 +10,6 @@ async function run() {
 
     const issueNumber = getInput("issue_number", { required: false });
 
-    console.log("context", context);
     console.log("context.payload.pull_request", context.payload.pull_request);
     console.log(
       "context.payload.pull_request.head",
@@ -31,7 +30,7 @@ async function run() {
 
     if (PRNumber) {
       console.log("🚀 Déclenché par PR");
-      // getPRInfos(owner, repo, octokit);
+      getIssueClosingPR(owner, repo, octokit);
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {
