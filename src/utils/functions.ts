@@ -22,7 +22,8 @@ export async function getIssueClosingPR(
 `;
 
     const result = await octokit.graphql<any>(query, {
-      variables: { owner, repo },
+      owner,
+      repo,
     });
     console.log("result", result);
 
