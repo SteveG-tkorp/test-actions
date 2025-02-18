@@ -6,7 +6,10 @@ inputs:
     description: 'The GITHUB_TOKEN secret'
   pr_number:
     description: "The PR number"
-    required: true
+    # required: true
+  issue_type:
+    description: "The issue type"
+    # required: true
 outputs:
   pr_updated:
     description: "The PR slightly updated to test this action"
