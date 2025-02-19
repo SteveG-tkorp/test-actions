@@ -5,7 +5,7 @@ export async function getIssueClosingPR(
   repo: string,
   octokit: Octokit,
   prNumber: number
-): Promise<{ closingIssues: any; prId: string }> {
+): Promise<{ closingIssues: any; prId: string; labels: any }> {
   try {
     const query = `query Repository($owner: String!, $repo: String!, $prNumber: Int!) {
     repository(owner: $owner, name: $repo) {
@@ -15,6 +15,13 @@ export async function getIssueClosingPR(
                 nodes {
                     id    
                 }
+            }
+        }
+        labels(first: 100) {
+        totalCount
+            nodes {
+                id
+                name
             }
         }
     }
@@ -27,13 +34,13 @@ export async function getIssueClosingPR(
       prNumber,
     });
 
-    // Vérifiez si des issues fermées sont présentes
     const closingIssues =
       result.repository.pullRequest.closingIssuesReferences.nodes;
 
     return {
       closingIssues: closingIssues.map((issue: any) => issue.id) ?? [],
       prId: result.repository.pullRequest.id,
+      labels: result.repository.labels,
     };
   } catch (error) {
     throw error;

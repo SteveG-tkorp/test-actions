@@ -1,6 +1,6 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { getIssueClosingPR } from "./utils/getIssueClosingPR";
+import { getIssueClosingPR } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
 import { getLabelsToApply } from "./utils/getLabelsToApply";
 
@@ -14,13 +14,12 @@ async function run() {
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
-    console.log("context", context);
 
     const octokit = getOctokit(token);
 
     if (PRNumber) {
       console.log("🚀 Déclenché par PR");
-      const { closingIssues, prId } = await getIssueClosingPR(
+      const { closingIssues, prId, labels } = await getIssueClosingPR(
         owner,
         repo,
         octokit,
@@ -29,17 +28,18 @@ async function run() {
 
       console.log("prId", prId);
       console.log("closingIssues", closingIssues);
+      console.log("labels", labels);
       const types = await Promise.all(
         closingIssues.map((issueId: string) => getIssueTypes(octokit, issueId))
       );
 
       console.log("types", types);
 
-      const labels: string[] = types.map((type: string) =>
+      const labelsFromTypes: string[] = types.map((type: string) =>
         getLabelsToApply(type)
       );
 
-      console.log("labels", labels);
+      console.log("labelsFromTypes", labelsFromTypes);
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {
