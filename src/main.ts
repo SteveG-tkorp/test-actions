@@ -1,6 +1,7 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { getIssueClosingPR } from "./utils/functions";
+import { getIssueClosingPR } from "./utils/getIssueClosingPR";
+import { getIssueTypes } from "./utils/getIssueTypes";
 
 async function run() {
   try {
@@ -17,7 +18,15 @@ async function run() {
 
     if (PRNumber) {
       console.log("🚀 Déclenché par PR");
-      getIssueClosingPR(owner, repo, octokit, Number(PRNumber));
+      const issuesIds = await getIssueClosingPR(
+        owner,
+        repo,
+        octokit,
+        Number(PRNumber)
+      );
+      issuesIds.forEach((issueId: string) => {
+        getIssueTypes(octokit, issueId);
+      });
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {

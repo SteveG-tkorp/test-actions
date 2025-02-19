@@ -37,6 +37,7 @@ export async function getIssueClosingPR(
         "Closing Issues IDs:",
         closingIssues.map((issue: any) => issue.id)
       );
+      return closingIssues.map((issue: any) => issue.id);
     } else {
       console.log("No closing issues found.");
     }
