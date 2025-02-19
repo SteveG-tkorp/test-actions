@@ -1,11 +1,12 @@
 import { Octokit } from "@octokit/core";
+import { issue } from "./types";
 
 export async function getInfos(
   owner: string,
   repo: string,
   octokit: Octokit,
   prNumber: number
-): Promise<{ closingIssues: any; prId: string; labels: any }> {
+): Promise<{ closingIssuesIds: string[]; prId: string; labels: any }> {
   try {
     const query = `query Repository($owner: String!, $repo: String!, $prNumber: Int!) {
     repository(owner: $owner, name: $repo) {
@@ -37,8 +38,11 @@ export async function getInfos(
     const closingIssues =
       result.repository.pullRequest.closingIssuesReferences.nodes;
 
+    if (closingIssues.length === 0) {
+      throw new Error("Aucune issue liée à la PR");
+    }
     return {
-      closingIssues: closingIssues.map((issue: any) => issue.id) ?? [],
+      closingIssuesIds: closingIssues.map((issue: issue) => issue.id) ?? [],
       prId: result.repository.pullRequest.id,
       labels: result.repository.labels.nodes,
     };

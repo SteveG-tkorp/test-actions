@@ -17,7 +17,6 @@ async function run() {
       ".github/labels-config.json";
 
     const labelsToApply = loadConfigFile(configPath);
-    console.log("labelsToApply", labelsToApply);
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
@@ -25,12 +24,11 @@ async function run() {
     const octokit = getOctokit(token);
 
     // Récupérer les informations principales
-    const { closingIssues, prId, labels } = await getInfos(
-      owner,
-      repo,
-      octokit,
-      Number(PRNumber)
-    );
+    const {
+      closingIssuesIds: closingIssues,
+      prId,
+      labels,
+    } = await getInfos(owner, repo, octokit, Number(PRNumber));
 
     // Récupérer les types
     const types = await Promise.all(
