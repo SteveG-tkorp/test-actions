@@ -9,22 +9,9 @@ async function run() {
     const PRNumber = getInput("pr_number", { required: false });
 
     const issueNumber = getInput("issue_number", { required: false });
-
-    console.log("context.payload.pull_request", context.payload.pull_request);
-    console.log(
-      "context.payload.pull_request.head",
-      context.payload.pull_request?.head
-    );
-    console.log(
-      "context.payload.pull_request._links",
-      context.payload.pull_request?._links
-    );
-
     const owner = context.repo.owner;
-    console.log("🧑‍💻 owner", owner);
 
     const repo = context.repo.repo;
-    console.log("🎯 repo", repo);
 
     const octokit = getOctokit(token);
 

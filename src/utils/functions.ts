@@ -27,6 +27,8 @@ export async function getIssueClosingPR(
     });
     console.log("result", result);
 
+    console.log('result.repository.pullRequest.closingIssuesReferences', result.repository.pullRequest.closingIssuesReferences)
+
     // Vérifiez si des issues fermées sont présentes
     const closingIssues =
       result.repository.pullRequest.closingIssuesReferences.nodes;
