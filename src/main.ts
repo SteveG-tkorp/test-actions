@@ -2,7 +2,7 @@ import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getInfos } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
-import { getLabelsIdsToApply } from "./utils/getLabelsToApply";
+import { getLabelsIdsToApply } from "./utils/getLabelsIdsToApply";
 import { addLabelsToPR } from "./utils/addLabelsToPR";
 import { loadConfigFile } from "./utils/loadConfigFile";
 
@@ -16,7 +16,7 @@ async function run() {
       getInput("labels_config_path", { required: true }) ||
       ".github/labels-config.json";
 
-    loadConfigFile(configPath);
+    const labelsToApply = loadConfigFile(configPath);
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
@@ -38,7 +38,7 @@ async function run() {
 
     // Récupérer les ids des labels à appliquer
     const labelsIdsFromTypes: string[] = types.map((type: string) =>
-      getLabelsIdsToApply(type, labels)
+      getLabelsIdsToApply(type, labels, labelsToApply)
     );
 
     // Appliquer les labels à la PR

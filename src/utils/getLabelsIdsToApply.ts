@@ -1,6 +1,10 @@
 import { label } from "./types";
 
-export function getLabelsIdsToApply(typeName: string, repoLabels: label[]) {
+export function getLabelsIdsToApply(
+  typeName: string,
+  repoLabels: label[],
+  labelsToApply: Record<string, string>
+) {
   if (!(typeName in labelsToApply)) {
     throw new Error(
       `Le type ${typeName} n'est pas renseigné dans votre configuration`
@@ -10,7 +14,7 @@ export function getLabelsIdsToApply(typeName: string, repoLabels: label[]) {
   return repoLabels.filter((label) => label.name === labelToApply)[0].id;
 }
 
-const labelsToApply: Record<string, string> = {
-  Bug: "bug",
-  Feature: "feature",
-};
+// const labelsToApply: Record<string, string> = {
+//   Bug: "bug",
+//   Feature: "feature",
+// };
