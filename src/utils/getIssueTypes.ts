@@ -31,7 +31,6 @@ export async function getIssueTypes(
     });
     console.log("result", result);
 
-    // Vérifiez si des issues fermées sont présentes
     const issueType = result.node.issueType;
     if (issueType) {
       console.log("issueType", issueType.name);

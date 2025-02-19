@@ -2,7 +2,8 @@ import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getIssueClosingPR } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
-import { getLabelsToApply } from "./utils/getLabelsToApply";
+import { getLabelsIdsToApply } from "./utils/getLabelsToApply";
+import { addLabelsToPR } from "./utils/addLabelsToPR";
 
 async function run() {
   try {
@@ -35,11 +36,12 @@ async function run() {
 
       console.log("types", types);
 
-      const labelsFromTypes: string[] = types.map((type: string) =>
-        getLabelsToApply(type)
+      const labelsIdsFromTypes: string[] = types.map((type: string) =>
+        getLabelsIdsToApply(type, labels)
       );
 
-      console.log("labelsFromTypes", labelsFromTypes);
+      console.log("labelsFromTypes", labelsIdsFromTypes);
+      await addLabelsToPR(octokit, prId, labelsIdsFromTypes);
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {
