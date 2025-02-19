@@ -25,8 +25,8 @@ async function run() {
         octokit,
         Number(PRNumber)
       );
-      const types = issuesIds.map((issueId: string) =>
-        getIssueTypes(octokit, issueId)
+      const types = issuesIds.map(
+        async (issueId: string) => await getIssueTypes(octokit, issueId)
       );
       console.log("types", types);
 
