@@ -7,7 +7,7 @@ export async function getIssueClosingPR(
   prNumber: number
 ) {
   try {
-    const query = `query Repository($owner: String!, $repo: String!) {
+    const query = `query Repository($owner: String!, $repo: String!, $prNumber: Int!) {
     repository(owner: $owner, name: $repo) {
         pullRequest(number: $prNumber) {
             closingIssuesReferences(first: 1) {
