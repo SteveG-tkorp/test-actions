@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/core";
 
-export async function getIssueClosingPR(
+export async function getInfos(
   owner: string,
   repo: string,
   octokit: Octokit,

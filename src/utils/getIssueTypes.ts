@@ -1,11 +1,6 @@
 import { Octokit } from "@octokit/core";
 
-export async function getIssueTypes(
-  // owner: string,
-  // repo: string,
-  octokit: Octokit,
-  issueId: string
-) {
+export async function getIssueTypes(octokit: Octokit, issueId: string) {
   try {
     const query = `query Node($issueId: ID!) {
     node(id: $issueId) {
@@ -22,18 +17,14 @@ export async function getIssueTypes(
 `;
 
     const result = await octokit.graphql<any>(query, {
-      // owner,
-      // repo,
       issueId,
       headers: {
         "GraphQL-Features": "issue_types",
       },
     });
-    console.log("result", result);
 
     const issueType = result.node.issueType;
     if (issueType) {
-      console.log("issueType", issueType.name);
       return issueType.name;
     } else {
       throw new Error("Pas de type défini pour cette issue");

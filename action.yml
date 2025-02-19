@@ -6,13 +6,7 @@ inputs:
     description: 'The GITHUB_TOKEN secret'
   pr_number:
     description: "The PR number"
-    # required: true
-  issue_number:
-    description: "The issue number"
-    # required: true
-outputs:
-  pr_updated:
-    description: "The PR slightly updated to test this action"
+    required: true
 runs:
   using: 'node20'
   main: 'lib/main.js'

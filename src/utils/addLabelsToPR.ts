@@ -1,14 +1,11 @@
+import { info } from "@actions/core";
 import { Octokit } from "@octokit/core";
-import { label } from "./types";
 
 export async function addLabelsToPR(
-  // owner: string,
-  // repo: string,
   octokit: Octokit,
   prId: string,
   labelsIds: any
 ) {
-  console.log("labels", labelsIds);
   try {
     const query = `mutation AddLabelsToLabelable($prId:ID!, $labelsIds: [ID!]!) {
     addLabelsToLabelable(
@@ -22,16 +19,11 @@ export async function addLabelsToPR(
 }
 `;
 
-    const result = await octokit.graphql<any>(query, {
-      // owner,
-      // repo,
+    await octokit.graphql<any>(query, {
       prId,
       labelsIds,
-      // headers: {
-      //   "GraphQL-Features": "issue_types",
-      // },
     });
-    console.log("result", result);
+    info(`Les labels ont été affectés à la PR`);
   } catch (error) {
     throw error;
   }

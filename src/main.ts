@@ -1,6 +1,6 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
-import { getIssueClosingPR } from "./utils/mainRequest";
+import { getInfos } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
 import { getLabelsIdsToApply } from "./utils/getLabelsToApply";
 import { addLabelsToPR } from "./utils/addLabelsToPR";
@@ -11,42 +11,32 @@ async function run() {
 
     const PRNumber = getInput("pr_number", { required: false });
 
-    const issueNumber = getInput("issue_number", { required: false });
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
 
     const octokit = getOctokit(token);
 
-    if (PRNumber) {
-      console.log("🚀 Déclenché par PR");
-      const { closingIssues, prId, labels } = await getIssueClosingPR(
-        owner,
-        repo,
-        octokit,
-        Number(PRNumber)
-      );
+    // Récupérer les informations principales
+    const { closingIssues, prId, labels } = await getInfos(
+      owner,
+      repo,
+      octokit,
+      Number(PRNumber)
+    );
 
-      console.log("prId", prId);
-      console.log("closingIssues", closingIssues);
-      console.log("labels", labels);
-      const types = await Promise.all(
-        closingIssues.map((issueId: string) => getIssueTypes(octokit, issueId))
-      );
+    // Récupérer les types
+    const types = await Promise.all(
+      closingIssues.map((issueId: string) => getIssueTypes(octokit, issueId))
+    );
 
-      console.log("types", types);
+    // Récupérer les ids des labels à appliquer
+    const labelsIdsFromTypes: string[] = types.map((type: string) =>
+      getLabelsIdsToApply(type, labels)
+    );
 
-      const labelsIdsFromTypes: string[] = types.map((type: string) =>
-        getLabelsIdsToApply(type, labels)
-      );
-
-      console.log("labelsFromTypes", labelsIdsFromTypes);
-      await addLabelsToPR(octokit, prId, labelsIdsFromTypes);
-    } else if (issueNumber) {
-      console.log("🛠️ Déclenché par changement de label sur issue");
-    } else {
-      console.error("❔ Autre déclenchement");
-    }
+    // Appliquer les labels à la PR
+    await addLabelsToPR(octokit, prId, labelsIdsFromTypes);
   } catch (error: unknown) {
     console.error(error);
     if (error instanceof Error) {
