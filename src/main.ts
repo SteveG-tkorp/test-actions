@@ -2,7 +2,7 @@ import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getInfos } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
-import { getLabelsIdsToApply } from "./utils/getLabelsIdsToApply";
+import { getLabelIdToApply } from "./utils/getLabelsIdsToApply";
 import { addLabelsToPR } from "./utils/addLabelsToPR";
 import { loadConfigFile } from "./utils/loadConfigFile";
 
@@ -38,9 +38,9 @@ async function run() {
     );
 
     // Récupérer les ids des labels à appliquer
-    const labelsIdsFromTypes: string[] = types.map((type: string) =>
-      getLabelsIdsToApply(type, labels, labelsToApply)
-    );
+    const labelsIdsFromTypes: string[] = types
+      .map((type: string) => getLabelIdToApply(type, labels, labelsToApply))
+      .filter((id): id is string => id !== undefined);
 
     // Appliquer les labels à la PR
     await addLabelsToPR(octokit, prId, labelsIdsFromTypes);
