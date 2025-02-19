@@ -1,6 +1,9 @@
 export async function getLabelsToApply(typeName: string) {
+  console.log("typeName", typeName);
   if (!(typeName in labelsToApply)) {
-    throw new Error("Ce type n'est pas renseigné dans votre configuration");
+    throw new Error(
+      `Le type ${typeName} n'est pas renseigné dans votre configuration`
+    );
   }
   return labelsToApply[typeName];
 }

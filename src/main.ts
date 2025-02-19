@@ -28,6 +28,7 @@ async function run() {
       const types = issuesIds.map((issueId: string) =>
         getIssueTypes(octokit, issueId)
       );
+      console.log("types", types);
 
       const labels: string[] = types.map((type: string) =>
         getLabelsToApply(type)
