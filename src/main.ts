@@ -17,6 +17,7 @@ async function run() {
       ".github/labels-config.json";
 
     const labelsToApply = loadConfigFile(configPath);
+    console.log("labelsToApply", labelsToApply);
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;

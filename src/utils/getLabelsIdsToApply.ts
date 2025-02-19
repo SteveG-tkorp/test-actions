@@ -14,6 +14,7 @@ export function getLabelsIdsToApply(
   console.log("labelsToApply", labelsToApply);
   const labelToApply = labelsToApply[typeName];
   console.log("labelToApply", labelToApply);
+  console.log("repoLabels", repoLabels);
   return repoLabels.filter((label) => label.name === labelToApply)[0].id;
 }
 
