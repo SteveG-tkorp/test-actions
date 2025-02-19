@@ -14,7 +14,7 @@ async function run() {
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
-    console.log("repo", repo);
+    console.log("repo", context.repo);
 
     const octokit = getOctokit(token);
 
