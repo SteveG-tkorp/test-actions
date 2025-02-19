@@ -7,7 +7,7 @@ export async function getIssueTypes(
   issueId: string
 ) {
   try {
-    const query = `query Node($issueId: String!) {
+    const query = `query Node($issueId: ID!) {
     node(id: $issueId) {
         id
         ... on Issue {
