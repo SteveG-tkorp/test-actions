@@ -40,7 +40,7 @@ export async function getIssueClosingPR(
     return {
       closingIssues: closingIssues.map((issue: any) => issue.id) ?? [],
       prId: result.repository.pullRequest.id,
-      labels: result.repository.labels,
+      labels: result.repository.labels.nodes,
     };
   } catch (error) {
     throw error;

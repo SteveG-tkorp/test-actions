@@ -1,6 +1,7 @@
 import { label } from "./types";
 
 export function getLabelsIdsToApply(typeName: string, repoLabels: label[]) {
+  console.log("repoLabels", repoLabels);
   console.log("typeName", typeName);
   if (!(typeName in labelsToApply)) {
     throw new Error(
