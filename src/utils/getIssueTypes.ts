@@ -25,6 +25,9 @@ export async function getIssueTypes(
       // owner,
       // repo,
       issueId,
+      headers: {
+        "GraphQL-Features": "issue_types",
+      },
     });
     console.log("result", result);
 
