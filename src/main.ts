@@ -2,6 +2,7 @@ import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getIssueClosingPR } from "./utils/getIssueClosingPR";
 import { getIssueTypes } from "./utils/getIssueTypes";
+import { getLabelsToApply } from "./utils/getLabelsToApply";
 
 async function run() {
   try {
@@ -24,9 +25,13 @@ async function run() {
         octokit,
         Number(PRNumber)
       );
-      issuesIds.forEach((issueId: string) => {
-        getIssueTypes(octokit, issueId);
-      });
+      const types = issuesIds.map((issueId: string) =>
+        getIssueTypes(octokit, issueId)
+      );
+
+      const labels: string[] = types.map((type: string) =>
+        getLabelsToApply(type)
+      );
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {

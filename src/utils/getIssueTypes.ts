@@ -33,7 +33,12 @@ export async function getIssueTypes(
 
     // Vérifiez si des issues fermées sont présentes
     const issueType = result.issueType;
-    console.log("issueType", issueType);
+    if (issueType) {
+      console.log("issueType", issueType.name);
+      return issueType.name;
+    } else {
+      throw new Error("Pas de type défini pour cette issue")
+    }
   } catch (error) {
     throw error;
   }
