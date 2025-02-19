@@ -32,6 +32,8 @@ async function run() {
       const labels: string[] = types.map((type: string) =>
         getLabelsToApply(type)
       );
+
+      console.log("labels", labels);
     } else if (issueNumber) {
       console.log("🛠️ Déclenché par changement de label sur issue");
     } else {
