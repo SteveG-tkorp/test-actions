@@ -24,10 +24,6 @@ export function getLabelIdToApply(
     }
     return matchingLabel.id;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      setFailed(error);
-      console.error(`Erreur de récupération d'id de label : ${error}`);
-    }
     throw error;
   }
 }
