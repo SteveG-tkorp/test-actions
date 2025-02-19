@@ -1,4 +1,4 @@
-export async function getLabelsToApply(typeName: string) {
+export function getLabelsToApply(typeName: string) {
   console.log("typeName", typeName);
   if (!(typeName in labelsToApply)) {
     throw new Error(

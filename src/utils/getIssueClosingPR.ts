@@ -25,18 +25,11 @@ export async function getIssueClosingPR(
       repo,
       prNumber,
     });
-    console.log("result", result);
-
-    console.log('result.repository.pullRequest.closingIssuesReferences', result.repository.pullRequest.closingIssuesReferences)
 
     // Vérifiez si des issues fermées sont présentes
     const closingIssues =
       result.repository.pullRequest.closingIssuesReferences.nodes;
     if (closingIssues.length > 0) {
-      console.log(
-        "Closing Issues IDs:",
-        closingIssues.map((issue: any) => issue.id)
-      );
       return closingIssues.map((issue: any) => issue.id);
     } else {
       console.log("No closing issues found.");
