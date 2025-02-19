@@ -28,5 +28,6 @@ export function getLabelIdToApply(
       setFailed(error);
       console.error(`Erreur de récupération d'id de label : ${error}`);
     }
+    throw error;
   }
 }

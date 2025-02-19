@@ -2,7 +2,7 @@ import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { getInfos } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
-import { getLabelIdToApply } from "./utils/getLabelsIdsToApply";
+import { getLabelIdToApply } from "./utils/getLabelIdToApply";
 import { addLabelsToPR } from "./utils/addLabelsToPR";
 import { loadConfigFile } from "./utils/loadConfigFile";
 
