@@ -18,13 +18,15 @@ export function getLabelIdToApply(
     console.log("labelToApply", labelToApply);
     console.log("repoLabels", repoLabels);
 
-    const id: string = repoLabels.filter(
+    const matchingLabel: label = repoLabels.filter(
       (label) => label.name === labelToApply
-    )[0].id;
-    if (!id) {
-      throw new Error(`Le label ${labelToApply} n'existe pas dans ce repository`)
+    )[0];
+    if (!matchingLabel) {
+      throw new Error(
+        `Le label ${labelToApply} n'existe pas dans ce repository`
+      );
     }
-    return id;
+    return matchingLabel.id;
   } catch (error: unknown) {
     if (error instanceof Error) {
       setFailed(error);
@@ -32,8 +34,3 @@ export function getLabelIdToApply(
     }
   }
 }
-
-// const labelsToApply: Record<string, string> = {
-//   Bug: "bug",
-//   Feature: "feature",
-// };
