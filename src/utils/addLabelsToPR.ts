@@ -8,6 +8,9 @@ export async function addLabelsToPR(
 ) {
   try {
     const query = `mutation AddLabelsToLabelable($prId:ID!, $labelsIds: [ID!]!) {
+     clearLabelsFromLabelable(input: { labelableId: $prId }) {
+        clientMutationId
+    }
     addLabelsToLabelable(
         input: {
             labelableId: $prId

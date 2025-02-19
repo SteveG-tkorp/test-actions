@@ -12,18 +12,14 @@ export function getLabelIdToApply(
         `Le type ${typeName} n'est pas renseigné dans votre configuration`
       );
     }
-    console.log("typeName", typeName);
-    console.log("labelsToApply", labelsToApply);
     const labelToApply = labelsToApply[typeName];
-    console.log("labelToApply", labelToApply);
-    console.log("repoLabels", repoLabels);
 
     const matchingLabel: label = repoLabels.filter(
       (label) => label.name === labelToApply
     )[0];
     if (!matchingLabel) {
       throw new Error(
-        `Le label ${labelToApply} n'existe pas dans ce repository`
+        `Le label '${labelToApply}' n'existe pas dans ce repository`
       );
     }
     return matchingLabel.id;
