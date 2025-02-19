@@ -7,6 +7,9 @@ inputs:
   pr_number:
     description: "The PR number"
     required: true
+  labels_config_path:
+    description: 'The config file to match types and labels'
+    required: true
 runs:
   using: 'node20'
   main: 'lib/main.js'

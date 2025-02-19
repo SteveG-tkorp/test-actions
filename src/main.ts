@@ -4,6 +4,7 @@ import { getInfos } from "./utils/mainRequest";
 import { getIssueTypes } from "./utils/getIssueTypes";
 import { getLabelsIdsToApply } from "./utils/getLabelsToApply";
 import { addLabelsToPR } from "./utils/addLabelsToPR";
+import { loadConfigFile } from "./utils/loadConfigFile";
 
 async function run() {
   try {
@@ -11,6 +12,11 @@ async function run() {
 
     const PRNumber = getInput("pr_number", { required: false });
 
+    const configPath =
+      getInput("labels_config_path", { required: true }) ||
+      ".github/labels-config.json";
+
+    loadConfigFile(configPath);
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
