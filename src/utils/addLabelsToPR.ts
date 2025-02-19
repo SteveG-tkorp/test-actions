@@ -6,9 +6,9 @@ export async function addLabelsToPR(
   // repo: string,
   octokit: Octokit,
   prId: string,
-  labels: any
+  labelsIds: any
 ) {
-  console.log("labels", labels);
+  console.log("labels", labelsIds);
   try {
     const query = `mutation AddLabelsToLabelable($prId:ID!, $labelsIds: [ID!]!) {
     addLabelsToLabelable(
@@ -22,8 +22,6 @@ export async function addLabelsToPR(
 }
 `;
 
-    const labelsIds = labels.map((label: label) => label.id);
-    console.log("labelsIds", labelsIds);
     const result = await octokit.graphql<any>(query, {
       // owner,
       // repo,

@@ -9,7 +9,7 @@ export function getLabelsIdsToApply(typeName: string, repoLabels: label[]) {
     );
   }
   const labelToApply = labelsToApply[typeName];
-
+  console.log("labelToApply", labelToApply);
   return repoLabels.filter((label) => label.name === labelToApply)[0].id;
 }
 
