@@ -14,21 +14,23 @@ async function run() {
     const owner = context.repo.owner;
 
     const repo = context.repo.repo;
+    console.log("repo", repo);
 
     const octokit = getOctokit(token);
 
     if (PRNumber) {
       console.log("🚀 Déclenché par PR");
-      const issuesIds = await getIssueClosingPR(
+      const { closingIssues, prId } = await getIssueClosingPR(
         owner,
         repo,
         octokit,
         Number(PRNumber)
       );
 
-      console.log("issuesIds", issuesIds);
+      console.log("prId", prId);
+      console.log("closingIssues", closingIssues);
       const types = await Promise.all(
-        issuesIds.map((issueId: string) => getIssueTypes(octokit, issueId))
+        closingIssues.map((issueId: string) => getIssueTypes(octokit, issueId))
       );
 
       console.log("types", types);
